@@ -1,5 +1,6 @@
 ﻿namespace Tilapia.Tools.Extensions
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -304,7 +305,7 @@
         {
             if (value.IsNullOrEmpty())
             {
-                return string.Empty;
+                return  string.Empty;
             }
 
             value = value.First().ToString().ToUpper() + value.Substring(1);
@@ -362,6 +363,48 @@
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 
             return result;
+        }
+
+        /// <summary>
+        /// Converts an object {T} to a JSON string.
+        /// </summary>
+        /// <typeparam name="T">Generic type to define the value</typeparam>
+        /// <param name="value">Object to convert.</param>
+        /// <returns>String formatted to JSON string.</returns>
+        public static string ToJson<T>(this T value)
+        {
+            return JsonConvert.SerializeObject(value);
+        }
+
+        /// <summary>
+        /// Returns the string value of an object using <see cref="Convert"/> struct.
+        /// </summary>
+        /// <param name="value">The <see cref="char"/> value</param>
+        /// <returns>String value</returns>
+        public static string ConvertToString(this char value)
+        { 
+            return Convert.ToString(value);
+        }
+
+        /// <summary>
+        /// Returns the string value of an object using <see cref="Convert"/> struct.
+        /// </summary>
+        /// <param name="value">The object value</param>
+        /// <returns>String value</returns>
+        public static string ConvertToString(this object value)
+        {
+            return Convert.ToString(value);
+        }
+
+        /// <summary>
+        /// Converts a string value to a object.
+        /// </summary>
+        /// <typeparam name="TResult">Generic type for result.</typeparam>
+        /// <param name="value">String vlue to deserialie.</param>
+        /// <returns>Final result.</returns>
+        public static TResult FromJson<TResult>(this string value)
+        {
+            return JsonConvert.DeserializeObject<TResult>(value);
         }
     }
 }

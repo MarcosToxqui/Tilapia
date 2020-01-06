@@ -1,62 +1,16 @@
-# DotNet.Tilapia
+# What is Tilapia
 
-##What is Tilapia
-
-Tilapia is a simple library that provides a set of extension methods to made common actions as compariosions of *null*, logic comparions usually maked with operator **>** or **<**.
-
-Additionally, Tilapia provides a simple code that intent simplify to write code for access to Sql Server databases.
+Tilapia is a simple library that provides a set of extension methods to made common actions as comparisions of *null*, logic comparions usually maked with operator **>** or **<**.
 
 I hope that this library (available as nuget) help you.
 
-##Data
+# Changes (1.0.1)
 
-Initialize instance for the `DbContext`, is your database access point.
+- A critical failure was fixed with the compatibility with .NET flavors
+- It was removed extensions and members for SqlServer.
+- It was added extensions for **Stream** objects (like convert to byte array).
 
-```cs
-static DbContext context = DbContext.PrepareContext("connection_string_config_key_name");
-```
-
-###`Query` object
-
-Is the main object to set up the SQL especs that you wish to execute with SqlServer.
-
-|Property|Description|
-|-|-|
-|`string QueryText`|The SQL statement text|
-|`List<SqlParameter> Parameters`|List of SqlParameters for parameterized  SQL statement.|
-|`bool WithTransaction`|Set up if execution should execute a transaction.|
-|`CommandType TextCommandType`|Setup the command type: Text or StoredProcedure|
-
-###`DbContext` object
-
-Is the context used to access to the database.
-
-|Methods|Description|
-|-|-|
-|`Query Query`|Gets or set the Query instance with the specs.|
-|`ExecuteQuery`|Finally executes the query|
-
-## Usage example
-
-```cs
-var insert = Query.CreateQuery();
-    insert.QueryText = "INSERT INTO [dbo].[foo] ([FooId],@Category,@Tags,@Status)";
-    insert.Parameters = new List<SqlParameter>() {
-                            new SqlParameter("@FooId", 1),
-                            new SqlParameter("@Category", 1),
-                            new SqlParameter("@Tags", "A, B, C"),
-                            new SqlParameter("@Status", true)
-                            };
-
-    insert.WithTransaction = true;
-    insert.TextCommandType = CommandType.Text;
-    insert.IsolationLevel = IsolationLevel.ReadCommitted;
-
-    context.Query = insert;
-    context.ExecuteQuery();
-```
-
-###Common extensions
+## Extensions
 
 |Function name|Extends to|
 |-|-|
@@ -84,7 +38,7 @@ var insert = Query.CreateQuery();
 |```bool IsValidMailAddress```|**string**|
 |```bool IsValidUrl```|**string**|
 
-###Comparision extensions
+## Comparision extensions
 
 |Function name|Extends to|
 |-|-|
@@ -98,7 +52,7 @@ var insert = Query.CreateQuery();
 |```bool IsBiggerThan```|**double**|
 |```bool IsBiggerThan```|**decimal**|
 
-##Licence
+## Licence
 
 Copyright 2019 Marcos Toxqui
 
